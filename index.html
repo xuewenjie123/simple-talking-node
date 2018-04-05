@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-success">
+                <div class="panel-heading">欢迎来到聊天室</div>
+                <div class="panel-body">
+                    <ul class="list-group" id="messageUl">
+
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="txtMsg">
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-default" id="btn">发言</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="jquery.js"></script>
+<!--当运行js的时候 ，window会挂载一个io对象-->
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    window.onload = function(){
+        var socket = io.connect('/')
+        function addMessage(msg){
+            $('#messageUl').append(`<li class="list-group-item"><span class="user">${msg.user}</span>:${msg.content}</li>`)
+        }
+        //监听客户端连接事件
+        socket.on('connect',function(){
+            console.log('连接成功')
+            addMessage({user:'系统消息',content:'连接成功'})
+        });
+        socket.on('message',function(message){
+            addMessage(message)
+        });
+        $('#btn').click(function(){
+            var msg = $('#txtMsg').val();
+            socket.send(msg);
+            $('#txtMsg').val('')
+        })
+        $('#txtMsg').keydown(function(ev){
+            var msg = $('#txtMsg').val()
+            if(ev.keyCode==13){
+                socket.send(msg);
+                $('#txtMsg').val('')
+            }
+        })
+        $('body').delegate('ul span','click',function(){
+            $('#txtMsg').val('@'+$(this).text()+' ')
+        })
+    }
+</script>
+
+</html>

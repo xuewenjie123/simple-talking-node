@@ -1,0 +1,25 @@
+{
+  "name": "simple-talking-node",
+  "version": "1.0.0",
+  "description": "node talking",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuewenjie123/simple-talking-node.git"
+  },
+  "author": "xuewenjie",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xuewenjie123/simple-talking-node/issues"
+  },
+  "homepage": "https://github.com/xuewenjie123/simple-talking-node#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "http": "0.0.0",
+    "path": "^0.12.7",
+    "socket.io": "^2.1.0"
+  }
+}
